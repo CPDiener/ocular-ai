@@ -23,7 +23,7 @@ ocular-ai/
 ├── ...
 ```
 3. Extract and move the contents of the download into the `data/raw` directory.
-4. Run the first cell of `main.ipynb` which is as follows:
+4. Run the first cell of `notebooks/main.ipynb` which is as follows:
 ```
 from src.data_prep import prepare_dataset
 

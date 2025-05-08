@@ -14,7 +14,7 @@
 ## Data Import
 
 1. Download "Augmented Dataset.zip" data from [Eye Disease Image Dataset.](https://data.mendeley.com/datasets/s9bfhswzjb/1)
-2. Create a data directory in the project root, then create a raw and processed subdirectory
+2. Create a `data/` directory in the project root, then create `raw/` and `processed/` subdirectories within it as so:
 ```
 ocular-ai/
 ├── data/
@@ -22,4 +22,12 @@ ocular-ai/
 │   └── processed/
 ├── ...
 ```
-3. 
+3. Extract and move the contents of the download into the `data/raw` directory.
+4. Run the first cell of `main.ipynb` which is as follows:
+```
+from src.data_prep import prepare_dataset
+
+# One-time setup (idempotent)
+prepare_dataset()
+```
+5. Once this cell is run, the data in `data/raw` will be split into training and validation sets within `data/processed`.

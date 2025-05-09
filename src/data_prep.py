@@ -11,9 +11,11 @@ def get_transforms():
     return transforms.Compose([
         transforms.Resize((224, 224)),
         transforms.ToTensor(),
-        transforms.Normalize(mean=[0.485, 0.456, 0.406],  # Standard ImageNet normalization
+        transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                             # Standard ImageNet normalization
                              std=[0.229, 0.224, 0.225])
     ])
+
 
 def get_dataloaders(data_dir, batch_size=32):
     transform = get_transforms()
@@ -34,24 +36,25 @@ def split_dataset(input_dir, output_dir, val_split=0.2):
         if not os.path.isdir(cls_path):
             continue
         images = os.listdir(cls_path)
-        train_imgs, val_imgs = train_test_split(images, test_size=val_split, random_state=42)
+        train_imgs, val_imgs = train_test_split(images, test_size=val_split,
+                                                random_state=42)
         for split, imgs in zip(["train", "val"], [train_imgs, val_imgs]):
             split_dir = os.path.join(output_dir, split, cls)
             os.makedirs(split_dir, exist_ok=True)
             for img in imgs:
-                shutil.copy2(os.path.join(cls_path, img), os.path.join(split_dir, img))
+                shutil.copy2(os.path.join(cls_path, img),
+                             os.path.join(split_dir, img))
 
 
 def prepare_dataset():
     input_dir = "../data/raw"
     output_dir = "../data/processed"
 
-    # Check if processed/train and processed/val exist and are non-empty
     already_prepared = (
-        os.path.exists(os.path.join(output_dir, "train")) and
-        os.path.exists(os.path.join(output_dir, "val")) and
-        any(os.scandir(os.path.join(output_dir, "train"))) and
-        any(os.scandir(os.path.join(output_dir, "val")))
+            os.path.exists(os.path.join(output_dir, "train")) and
+            os.path.exists(os.path.join(output_dir, "val")) and
+            any(os.scandir(os.path.join(output_dir, "train"))) and
+            any(os.scandir(os.path.join(output_dir, "val")))
     )
 
     if already_prepared:
